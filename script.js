@@ -8,10 +8,6 @@ function setup() {
 
     createEpisodesSelectionList(allEpisodes);
     makePageForEpisodes(allEpisodes);
-
-    const allShows = getAllShows();
-
-    createShowsSelectionList(allShows);
 }
 
 function formattedEpisode(episode, nameAtStart) {
@@ -145,53 +141,6 @@ function selectOneEpisode() {
         let episodeObject = listOfEpisodes[index];
         selectedEpisode.push(episodeObject);
         makePageForEpisodes(selectedEpisode);
-    }
-}
-
-function createShowsSelectionList() {
-    let listOfShows = getAllShows();
-    listOfShows.sort((a, b) => (a.name > b.name ? 1 : -1));
-
-    let selectList = document.createElement("select");
-    selectList.classList.add("select");
-    let headerElement = document.getElementsByTagName("header")[0];
-    headerElement.appendChild(selectList);
-
-    let option = document.createElement("option");
-    option.classList.add("option");
-    option.textContent = "Home - Series Selection";
-    selectList.appendChild(option);
-
-    for (let show of listOfShows) {
-        let option = document.createElement("option");
-        option.text = show.name;
-        option.value = listOfShows.indexOf(show);
-        selectList.appendChild(option);
-    }
-    selectList.addEventListener("change", selectOneShow);
-}
-
-function selectOneShow() {
-    let listOfShows = getAllShows();
-
-    listOfShows.sort((a, b) => (a.name > b.name ? 1 : -1));
-    let inputElement = document.getElementsByClassName("input")[0];
-    inputElement.value = "";
-
-    let paragraphElement = document.getElementsByClassName("paragraph")[0];
-    paragraphElement.innerHTML = `Displaying your selection`;
-
-    let selectList = document.getElementsByClassName("select")[1];
-    if (selectList.value === "Home - Series Selection") {
-        paragraphElement.innerHTML = `Full catalogue`;
-        makePageForEpisodes(listOfShows);
-    } else {
-        let selectedShow = [];
-        let index = selectList.value;
-        let episodeObject = listOfShows[index];
-        selectedShow.push(episodeObject);
-        let id = selectedShow[0].id;
-        fetchData(id);
     }
 }
 
